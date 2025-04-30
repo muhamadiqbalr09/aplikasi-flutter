@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iqbal/DashboardScreen.dart';
+import 'package:iqbal/components/login_button.dart';
 
 void main() {
   runApp(const MyApp());
@@ -61,18 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.email),
                   ),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    if (!RegExp(
-                      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                    ).hasMatch(value)) {
-                      return 'Please enter a valid email';
-                    }
-                    return null;
-                  },
+                  keyboardType: TextInputType.emailAddress
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
@@ -92,48 +82,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                   ),
-                  obscureText: _obscureText,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    if (value.length < 6) {
-                      return 'Password must be at least 6 characters';
-                    }
-                    return null;
-                  },
+                  obscureText: _obscureText
                 ),
                 const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: () {
-                    Map<String, String> data = {
-                      'email': _emailController.text,
-                      'password': _passwordController.text,
-                    };
-
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder:(context, animation, secondaryAnimation) => DashboardScreen(data: data),
-                        transitionsBuilder: (
-                          context,
-                          animation,
-                          secondaryAnimation,
-                          child,
-                        ) {
-                          return FadeTransition(
-                            opacity: animation,
-                            child: child,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50),
-                  ),
-                  child: const Text('Login'),
-                ),
+                login_button(emailController: _emailController, passwordController: _passwordController, text: 'Login'),
                 const SizedBox(height: 16),
                 TextButton(
                   onPressed: () {},
@@ -147,3 +99,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
